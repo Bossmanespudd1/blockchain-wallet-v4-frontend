@@ -94,6 +94,7 @@ const FirstStep = props => {
   } = props
 
   const {
+    amount,
     autofilled,
     excludeHDWallets,
     excludeLockbox,
@@ -227,7 +228,7 @@ const FirstStep = props => {
       </FormGroup>
       <FormGroup>
         {isFromCustody && isMnemonicVerified ? (
-          <CustodyToAccountMessage coin='BTC' />
+          <CustodyToAccountMessage coin='BTC' account={from} amount={amount} />
         ) : (
           <ExchangePromo />
         )}
@@ -249,7 +250,7 @@ const FirstStep = props => {
             ]}
             coin='BTC'
             data-e2e='sendBtc'
-            disabled={isPayPro || isFromCustody}
+            disabled={isPayPro}
             marginTop='8px'
           />
         </FormItem>
