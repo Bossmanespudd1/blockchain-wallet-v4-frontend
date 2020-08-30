@@ -208,14 +208,13 @@ const FirstStep = props => {
           )}
         </FormItem>
       </FormGroup>
-      <FormGroup>
-        <ExchangePromo />
-      </FormGroup>
       {isFromCustody && isMnemonicVerified ? (
         <FormGroup>
-          <CustodyToAccountMessage coin={coin} />
+          <CustodyToAccountMessage coin={coin} account={from} amount={amount} />
         </FormGroup>
-      ) : null}
+      ) : (
+        <ExchangePromo />
+      )}
       <FormGroup margin={'15px'}>
         <FormItem>
           <FormLabel HtmlFor='amount'>
@@ -223,7 +222,7 @@ const FirstStep = props => {
           </FormLabel>
           <Field
             name='amount'
-            disabled={unconfirmedTx || isFromCustody}
+            disabled={unconfirmedTx}
             component={FiatConverter}
             coin={coin}
             validate={[
@@ -256,10 +255,10 @@ const FirstStep = props => {
           </FormLabel>
           <Field
             name='description'
+            disabled={isFromCustody}
             component={TextAreaDebounced}
             placeholder="What's this transaction for? (optional)"
             data-e2e={`${coin}SendDescription`}
-            disabled={isFromCustody}
             fullwidth
           />
         </FormItem>

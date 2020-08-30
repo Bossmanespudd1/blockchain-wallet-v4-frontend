@@ -74,6 +74,7 @@ const MemoField = styled.div`
 const FirstStep = props => {
   const {
     activeField,
+    amount,
     balanceStatus,
     error,
     excludeLockbox,
@@ -189,7 +190,11 @@ const FirstStep = props => {
           </FormGroup>
           {isFromCustody && isMnemonicVerified ? (
             <FormGroup>
-              <CustodyToAccountMessage coin={'XLM'} />
+              <CustodyToAccountMessage
+                coin={'XLM'}
+                account={from}
+                amount={amount}
+              />
             </FormGroup>
           ) : (
             <ExchangePromo />
@@ -205,7 +210,6 @@ const FirstStep = props => {
               <Field
                 name='amount'
                 component={XlmFiatConverter}
-                disabled={isFromCustody}
                 error={error}
                 coin='XLM'
                 validate={[required, invalidAmount, insufficientFunds]}
@@ -291,9 +295,9 @@ const FirstStep = props => {
               </FormLabel>
               <Field
                 name='description'
+                disabled={isFromCustody}
                 component={TextAreaDebounced}
                 placeholder="What's this transaction for? (optional)"
-                disabled={isFromCustody}
                 data-e2e='sendXlmDescription'
                 fullwidth
               />
